@@ -1,6 +1,7 @@
-# Reporte-de-crédito-consolidado-simulacion-client-java
+# rcc-simulacion-client-java [![GitHub Packages](https://img.shields.io/badge/Maven&nbsp;package-Last&nbsp;version-lemon)](https://github.com/orgs/APIHub-CdC/packages?repo_name=rcc-simulacion-client-java) 
 
-Esta API simula el reporte del historial crediticio, el cumplimiento de pago de los compromisos que la persona ha adquirido con entidades financieras, no financieras e instituciones comerciales que dan crédito o participan en actividades afines al crédito. En esta versión se retornan los campos del Crédito Asociado a Nomina (CAN) en el nodo de créditos.
+
+Esta API simula el reporte del historial crediticio, el cumplimiento de pago de los compromisos que la persona ha adquirido con entidades financieras, no financieras e instituciones comerciales que dan crédito o participan en actividades afines al crédito. En esta versión se retornan los campos del Crédito Asociado a Nomina (CAN) en el nodo de créditos. <br/><img src='https://github.com/APIHub-CdC/imagenes-cdc/blob/master/circulo_de_credito-apihub.png' height='37' width='160'/></p><br/>
 
 ## Requisitos
 
@@ -38,52 +39,57 @@ Al iniciar sesión seguir os siguientes pasos:
 
 ### Paso 2. Capturar los datos de la petición
 
-Los siguientes datos a modificar se encuentran en ***src/test/java/io/apihub/client/api/ReporteDeCrditoConsolidadoApiTest.java***
+Los siguientes datos a modificar se encuentran en ***src/test/java/com/cdc/apihub/mx/RCC/simulacion/test/ApiTest.java***
 
 Es importante contar con el setUp() que se encargará de inicializar la url. Modificar la URL ***('the_url')***, como se muestra en el siguiente fragmento de código:
 
+
 ```java
-private final ReporteDeCrditoConsolidadoApi api = new ReporteDeCrditoConsolidadoApi();
+private final RCCApi api = new RCCApi();
 private ApiClient apiClient;
-private String xApiKey = null;
+private String xApiKey = "your_api_key";
+private String url = "the_url";
 
 @Before()
 public void setUp() {
     this.apiClient = api.getApiClient();
-    this.apiClient.setBasePath("the_url");
-    OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+     this.apiClient.setBasePath(url);
+     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
             .readTimeout(30, TimeUnit.SECONDS)
             .build();
-    apiClient.setHttpClient(okHttpClient);
-    this.xApiKey = "XXXXXXXX";
+     apiClient.setHttpClient(okHttpClient);
 }
 ```
 
-De igual manera, en el archivo **ReporteDeCrditoConsolidadoApiTest**, se deberá modificar el siguiente fragmento de código con los datos correspondientes:
+De igual manera, en el archivo **ApiTest**, se deberá modificar el siguiente fragmento de código con los datos correspondientes:
+
+> **NOTA:** Para más ejemplos de simulación, consulte la colección de Postman.
 
 ```java
 @Test
 public void getFullReportTest() throws ApiException {
-    String xFullReport = "true";
-    PersonaPeticion body = new PersonaPeticion();
-    body.setPrimerNombre("XXXXXXXX");
-    body.setApellidoPaterno("XXXXXXXX");
-    body.setApellidoMaterno("XXXXXXXX");
-    body.setFechaNacimiento("yyyy-MM-dd");
-    body.setRFC("XXXXXXXX");
-    body.setNacionalidad("XX");
-    
+	String xFullReport = "true";
+	PersonaPeticion body = new PersonaPeticion();
+
+    body.setPrimerNombre("JUAN");
+    body.setApellidoPaterno("SESENTAYDOS");
+    body.setApellidoMaterno("PRUEBA");
+    body.setFechaNacimiento("1965-08-09");
+    body.setRFC("SEPJ650809JG1");
+    body.setNacionalidad("MX");
+
     DomicilioPeticion dom = new DomicilioPeticion();
-    dom.setDireccion("XXXXXXXX");
-    dom.setColoniaPoblacion("XXXXXXXX");
-    dom.setDelegacionMunicipio("XXXXXXXX");
-    dom.setCiudad("XXXXXXXX");
-    dom.setEstado(CatalogoEstados.DF);
-    dom.setCP("XXXXXXXX");
+    dom.setDireccion("PASADISO ENCONTRADO 58");
+    dom.setColoniaPoblacion("MONTEVIDEO");
+    dom.setDelegacionMunicipio("GUSTAVO A MADERO");
+    dom.setCiudad("CIUDAD DE MÉXICO");
+    dom.setEstado(CatalogoEstados.CDMX);
+    dom.setCP("07730");
     body.setDomicilio(dom);
 
-    Respuesta response = api.getReporte(this.xApiKey, body, xFullReport);
-    Assert.assertTrue(response.getFolioConsulta() != null);
+	Respuesta response = api.getReporte(this.xApiKey, body, xFullReport);
+	logger.info("FullReportTest: "+response.toString());
+	Assert.assertTrue(response.getFolioConsulta() != null);
 }
 ```
 
