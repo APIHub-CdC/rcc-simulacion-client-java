@@ -349,7 +349,7 @@ public class RCCApi {
 		return apiClient.execute(call, localVarReturnType);
 	}
 
-	public okhttp3.Call getReporteCall(String xApiKey, PersonaPeticion request, String xFullReport,
+	public okhttp3.Call getReporteCall(String xApiKey, PersonaPeticion request,
 			final ProgressResponseBody.ProgressListener progressListener,
 			final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 		Object localVarPostBody = request;
@@ -359,8 +359,7 @@ public class RCCApi {
 		Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 		if (xApiKey != null)
 			localVarHeaderParams.put("x-api-key", apiClient.parameterToString(xApiKey));
-		if (xFullReport != null)
-			localVarHeaderParams.put("x-full-report", apiClient.parameterToString(xFullReport));
+		
 		Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 		final String[] localVarAccepts = { "application/json" };
 		final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
@@ -384,7 +383,7 @@ public class RCCApi {
 				localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
 	}
 	
-	private okhttp3.Call getReporteValidateBeforeCall(String xApiKey, PersonaPeticion request, String xFullReport,
+	private okhttp3.Call getReporteValidateBeforeCall(String xApiKey, PersonaPeticion request,
 			final ProgressResponseBody.ProgressListener progressListener,
 			final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 		if (xApiKey == null) {
@@ -394,18 +393,18 @@ public class RCCApi {
 			throw new ApiException("Missing the required parameter 'request' when calling getReporte(Async)");
 		}
 
-		okhttp3.Call call = getReporteCall(xApiKey, request, xFullReport, progressListener, progressRequestListener);
+		okhttp3.Call call = getReporteCall(xApiKey, request, progressListener, progressRequestListener);
 		return call;
 	}
 
-	public Respuesta getReporte(String xApiKey, PersonaPeticion request, String xFullReport) throws ApiException {
-		ApiResponse<Respuesta> resp = getReporteWithHttpInfo(xApiKey, request, xFullReport);
+	public Respuesta getReporte(String xApiKey, PersonaPeticion request) throws ApiException {
+		ApiResponse<Respuesta> resp = getReporteWithHttpInfo(xApiKey, request);
 		return resp.getData();
 	}
 
-	public ApiResponse<Respuesta> getReporteWithHttpInfo(String xApiKey, PersonaPeticion request, String xFullReport)
+	public ApiResponse<Respuesta> getReporteWithHttpInfo(String xApiKey, PersonaPeticion request)
 			throws ApiException {
-		okhttp3.Call call = getReporteValidateBeforeCall(xApiKey, request, xFullReport, null, null);
+		okhttp3.Call call = getReporteValidateBeforeCall(xApiKey, request, null, null);
 		Type localVarReturnType = new TypeToken<Respuesta>() {
 		}.getType();
 		return apiClient.execute(call, localVarReturnType);
