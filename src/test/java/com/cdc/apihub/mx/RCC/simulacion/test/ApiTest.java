@@ -38,7 +38,7 @@ public class ApiTest {
 
 	@Test
 	public void getFullReportTest() throws ApiException {
-		String xFullReport = "true";
+		
 		PersonaPeticion body = new PersonaPeticion();
 
         body.setPrimerNombre("JUAN");
@@ -57,33 +57,8 @@ public class ApiTest {
         dom.setCP("07730");
         body.setDomicilio(dom);
 
-		Respuesta response = api.getReporte(this.xApiKey, body, xFullReport);
+		Respuesta response = api.getReporte(this.xApiKey, body);
 		logger.info("FullReportTest: "+response.toString());
-		Assert.assertTrue(response.getFolioConsulta() != null);
-	}
-	
-	@Test
-	public void getReporteTest() throws ApiException {
-		String xFullReport = "false";
-		PersonaPeticion body = new PersonaPeticion();
-        body.setPrimerNombre("JUAN");
-        body.setApellidoPaterno("SESENTAYDOS");
-        body.setApellidoMaterno("PRUEBA");
-        body.setFechaNacimiento("1965-08-09");
-        body.setRFC("SEPJ650809JG1");
-        body.setNacionalidad("MX");
-
-        DomicilioPeticion dom = new DomicilioPeticion();
-        dom.setDireccion("PASADISO ENCONTRADO 58");
-        dom.setColoniaPoblacion("MONTEVIDEO");
-        dom.setDelegacionMunicipio("GUSTAVO A MADERO");
-        dom.setCiudad("CIUDAD DE MÉXICO");
-        dom.setEstado(CatalogoEstados.CDMX);
-        dom.setCP("07730");
-        body.setDomicilio(dom);
-
-		Respuesta response = api.getReporte(this.xApiKey, body, xFullReport);
-		logger.info("SegmentReportTest: "+response.toString());
 		Assert.assertTrue(response.getFolioConsulta() != null);
 	}
 }
